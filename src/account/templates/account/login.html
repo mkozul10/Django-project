@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+<!--Form-->
+<style type="text/css">
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.h2{
+  text-align: center;
+}
+</style>
+<main class="form-signin w-100 m-auto">
+  <div class="d-flex flex-column pb-3">
+    <img class="img-fluid mx-auto d-block" src="{% static 'logo.png' %}" alt="slika" width="72" height="72">
+  </div>
+<form method="post"> {% csrf_token %}
+    <h2 class="h2 mb-3 fw-normal">Log in</h2>
+
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="Email address">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <!--Printing errors-->
+    {% for field in login_form %}
+        {% for error in field.errors %}
+            <p style="color:red;">{{error}}</p>
+        {% endfor %}
+    {% endfor %}
+
+    {% if login_form.non_field_errors %}
+        <div style="color:red;">
+            <p>{{login_form.non_field_errors}}</p>
+        </div>
+    {% endif %}
+    <!--Printing errors End-->
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
+  </form>
+</main>
+<!--Form end-->
+<div class="d-flex flex-column">
+  <a class="m-auto"href="{% url 'password_reset' %}">Reset password</a>
+</div>
+{% endblock content%}
